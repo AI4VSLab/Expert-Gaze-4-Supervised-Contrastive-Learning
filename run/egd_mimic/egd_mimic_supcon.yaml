@@ -1,0 +1,82 @@
+# pytorch_lightning==2.0.2
+seed_everything: true
+trainer:
+  accelerator: gpu
+  strategy: auto
+  devices: [0]
+  num_nodes: 1
+  precision: 32-true
+  logger: true
+  callbacks: 
+    - class_path: pytorch_lightning.callbacks.LearningRateMonitor # only have to put path, then CLI will help us to full it up
+    - class_path: pytorch_lightning.callbacks.ModelCheckpoint
+      init_args:
+        dirpath: null # default to trainer.default_root_dir if none
+        save_on_train_epoch_end: true 
+  fast_dev_run: false
+  max_epochs: 200
+  min_epochs: null
+  max_steps: -1
+  min_steps: null
+  max_time: null
+  limit_train_batches: null
+  limit_val_batches: null
+  limit_test_batches: null
+  limit_predict_batches: null
+  overfit_batches: 0.0
+  val_check_interval: null
+  check_val_every_n_epoch: 2
+  num_sanity_val_steps: null
+  log_every_n_steps: 2
+  enable_checkpointing: true
+  enable_progress_bar: true
+  enable_model_summary: null
+  accumulate_grad_batches: 1
+  gradient_clip_val: null
+  gradient_clip_algorithm: null
+  deterministic: null
+  benchmark: null
+  inference_mode: true
+  use_distributed_sampler: true
+  profiler: null
+  detect_anomaly: false
+  barebones: false
+  plugins: null
+  sync_batchnorm: false
+  reload_dataloaders_every_n_epochs: 0
+  default_root_dir: # TODO: insert path to where you want models to be saved
+model:
+  class_path: nn.pl_modules.report_supcon_pl.Report_SupCon_pl 
+  init_args:
+    model: null
+    device: cuda
+    mode: ssl
+    tau: 0.1
+    g_units:
+    - - 2048
+      - 2048
+    - - 2048
+      - 1024
+    optimizer_param: adam
+    optim_scheduling: cos
+    loss_ssl_type: supcon
+    lr: 0.001
+    epochs: null
+    r2n_path: null # path to embeddings and neighoburs
+data:
+  class_path: dataset.datamodule.EGD_MIMIC_DM.EGD_MIMIC_DM
+  init_args:
+    base_path: TODO: insert path to dataset
+    data_type: img
+    split: 0.8
+    split_trainset: 1.0
+    max_seq_length: 512
+    batch_size: 32
+    linear_eval: false
+    r2n_path: null
+task: fit
+mode: ssl
+ckpt_path: ''
+save_embed_proj: false
+description: ''
+train_test_split: 0.8

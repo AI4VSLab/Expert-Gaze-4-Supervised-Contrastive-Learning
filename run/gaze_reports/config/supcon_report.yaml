@@ -1,0 +1,73 @@
+# pl config
+seed_everything: true
+trainer:
+  accelerator: gpu
+  strategy: auto
+  devices: [1] 
+  num_nodes: 1
+  precision: 32-true
+  logger: true
+  callbacks: 
+    - class_path: pytorch_lightning.callbacks.LearningRateMonitor 
+    - class_path: pytorch_lightning.callbacks.ModelCheckpoint
+      init_args:
+        dirpath: null # default to trainer.default_root_dir if none
+        save_on_train_epoch_end: true 
+  fast_dev_run: false
+  max_epochs: 200
+  min_epochs: null
+  max_steps: -1
+  min_steps: null
+  max_time: null
+  limit_train_batches: null
+  limit_val_batches: null
+  limit_test_batches: null
+  limit_predict_batches: null
+  overfit_batches: 0.0
+  val_check_interval: null
+  check_val_every_n_epoch: 50
+  num_sanity_val_steps: null
+  log_every_n_steps: 2 
+  enable_checkpointing: true
+  enable_progress_bar: true
+  enable_model_summary: null
+  accumulate_grad_batches: 1
+  gradient_clip_val: null
+  gradient_clip_algorithm: null
+  deterministic: null
+  benchmark: null
+  inference_mode: true
+  use_distributed_sampler: true
+  profiler: null
+  detect_anomaly: false
+  barebones: false
+  plugins: null
+  sync_batchnorm: false
+  reload_dataloaders_every_n_epochs: 0
+  default_root_dir: # TODO: path to where you want to save
+model:
+  model: null
+  device: cuda
+  mode: ssl
+  tau: 0.1
+  g_units:
+  - - 2048
+    - 2048
+  - - 2048
+    - 1024
+  optimizer_param: adam
+  optim_scheduling: cos
+  lr: 0.001
+  epochs: null
+data:
+  report_dataset_path: # TODO: path to reports
+  fixation_path: null
+  tobii_fixation_path: # TODO: path to tobii fixations 
+  fixation_path: # TODO: path to fixations
+  batch_size: 16
+  split: 0.8
+  split_trainset: 1.0
+  mode: ssl
+  data_type: report
+  embeddings_path: 
+save_attn: false
