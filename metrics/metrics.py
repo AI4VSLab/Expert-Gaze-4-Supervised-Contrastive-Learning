@@ -47,7 +47,7 @@ def helper_df(
   FP_filenames = []
   FP_gaze_length = []
   for i, fp in enumerate(model_pl.FP):
-    filename = dm.testset.idx_path[i].removeprefix('/content/drive/MyDrive/Columbia/Glacoma AI/')
+    filename = dm.testset.idx_path[i].removeprefix('')
     seq_region = list(dm.gaze_data.loc[filename].seq_region)
     if fp == 1: 
       FP_gaze_length.append( len(seq_region)- seq_region.count(0)-3 )
@@ -56,7 +56,7 @@ def helper_df(
   FN_filenames = []
   FN_gaze_length = []
   for i, fn in enumerate(model_pl.FN):
-    filename = dm.testset.idx_path[i].removeprefix('/content/drive/MyDrive/Columbia/Glacoma AI/')
+    filename = dm.testset.idx_path[i].removeprefix('')
     seq_region = list(dm.gaze_data.loc[filename].seq_region)
     if fn == 1: 
       FN_gaze_length.append( len(seq_region)- seq_region.count(0)-3  )
